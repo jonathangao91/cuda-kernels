@@ -1,0 +1,21 @@
+# Compiled binaries / build artifacts
+a.out
+*.o
+*.obj
+*.ptx
+*.cubin
+*.fatbin
+
+# Per-kernel compiled executables (no extension on Linux)
+01_vector_add/vector_add
+
+# Toolchain installers / package cache
+*.deb
+*.rpm
+*.tar.gz
+
+# Editor / OS junk
+.vscode/
+.idea/
+*.swp
+.DS_Store
