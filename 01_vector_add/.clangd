@@ -1,4 +1,8 @@
 CompileFlags:
+  CompilationDatabase: None
   Add:
+    - "-xcuda"
     - "--cuda-gpu-arch=sm_89"
+    - "--cuda-path=/usr/local/cuda"
+    - "-std=c++17"
     - "-Wno-unknown-cuda-version"
