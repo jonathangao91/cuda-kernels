@@ -12,11 +12,12 @@ For the foundational ML / transformer work that preceded this, see [zero-to-hero
 
 ## Kernels
 
-TBD
+1. Vector addition (done)
+2. Tranpose (in progress)
 
 ## Setup
 
-Tested on [GPU + CUDA version, TBD]. Each kernel folder has its own build instructions; most are a single `nvcc` invocation.
+Tested on an RTX 4090 using CUDA 13.2. Each kernel folder has its own build instructions; most are a single `nvcc` invocation.
 
 ## Status
 
