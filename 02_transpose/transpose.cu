@@ -27,6 +27,42 @@ __global__ void naive_transpose(int *a, int *at, int dim) {
   return;
 }
 
+__global__ void tiled_transpose(int *a, int *at, int dim) {
+  __shared__ int tile[32][33];
+
+  // Stable definition: identify unique thread id tuple in block.
+  int tx = threadIdx.x;
+  int ty = threadIdx.y;
+
+  // For each global memory tile footprint, all threads in block collaborate on
+  // filling the shared memory tile, then collaborate on writing the tile's
+  // transpose to the transpose of the tile footprint.
+  // Since we are assuming a square matrix, it doesn't matter whether we
+  // conceptually map x and y to either rows and cols.
+  // For consistency, x and y are the col and row axes, respectively.
+  // Blocks map 1:1 to tiles, so input matrix coords are calculated
+  // using block built-ins to pinpoint the tile footprint corresponding to the
+  // block, then use thread built-ins to pinpoint the corresponding element
+  // within that tile footprint.
+  int a_x = blockIdx.x * blockDim.x + tx;
+  int a_y = blockIdx.y * blockDim.y + ty;
+
+  if (a_x < dim && a_y < dim) {
+
+    int a_1d_idx = a_y * dim + a_x;
+
+    tile[ty][tx] = a[a_1d_idx];
+  }
+  __syncthreads();
+
+  if (a_x < dim && a_y < dim) {
+    int at_x = blockIdx.y * blockDim.y + tx;
+    int at_y = blockIdx.x * blockDim.x + ty;
+    int at_1d_idx = at_y * dim + at_x;
+    at[at_1d_idx] = tile[tx][ty];
+  }
+}
+
 int main() {
   int rc = cudaSuccess;
   const int dim_benchmarks[3] = {256, 1024, 4096};
@@ -83,7 +119,7 @@ int main() {
     CHECK_ERROR(cudaEventCreate(&end));
 
     CHECK_ERROR(cudaEventRecord(start));
-    naive_transpose<<<grid, block>>>(a_d, at_d, N);
+    tiled_transpose<<<grid, block>>>(a_d, at_d, N);
     // Catches kernel launch errors.
     if ((exec_err = cudaGetLastError()) != cudaSuccess) {
       printf("Kernel launch failed: %s\n", cudaGetErrorString(exec_err));
