@@ -50,3 +50,5 @@ What surprised me:
 1. Without understanding the purpose of tiling, it is easy to mess up what threads should read from and write to which elements in global memory. While fighting the implementation to pass validation, I produced a **correct** phase 2 that still **failed to coalesce** global stores.
 2. I introduced a subtle bug: swapping **both** global addresses and tile indices in phase 2 effectively **undid** the transpose. Two coherent fixes: **(a)** flip only the tile access (classic NVIDIA pattern; coalesced writes), or **(b)** read the tile the same way it was filled and keep swapped global indices (strided writes; no coalescing win).
 3. I did not reason about blocks carefully enough at first and used nested loops over all tiles per thread, which defeats parallelism across the grid. **Each block handles one tile**, not the whole matrix serially.
+
+Companion blog: jonathangao.bearblog.dev

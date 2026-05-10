@@ -22,3 +22,5 @@ Tested on an RTX 4090 using CUDA 13.2. Each kernel folder has its own build inst
 ## Status
 
 Active.
+
+Companion blog: jonathangao.bearblog.dev
