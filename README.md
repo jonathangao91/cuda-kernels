@@ -13,7 +13,7 @@ For the foundational ML / transformer work that preceded this, see [zero-to-hero
 ## Kernels
 
 1. Vector addition (done)
-2. Tranpose (in progress)
+2. Tranpose (done)
 
 ## Setup
 
