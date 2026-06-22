@@ -8,7 +8,7 @@ Each kernel lives in its own folder with the kernel itself, a host-side test/ben
 
 I'm working through *Programming Massively Parallel Processors* (Hwu, Kirk, Hajj, 4th ed.) alongside this repo. Kernels here roughly track the chapters I'm reading: simple element-wise ops first, then memory-hierarchy-aware patterns (tiling, shared memory), then more interesting ML primitives.
 
-For the foundational ML / transformer work that preceded this, see [zero-to-hero-ai](https://github.com/jonathangao91/zero-to-hero-ai).
+For the foundational ML / transformer work that preceded this, see [zero-to-hero-ai](https://github.com/jonagao/zero-to-hero-ai).
 
 ## Kernels
 
